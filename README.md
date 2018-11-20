@@ -9,7 +9,7 @@ Auto build docker image for ranzhi(然之), include open source edition and pro 
 
 DockerHub:[zhangsean/ranzhi](https://hub.docker.com/r/zhangsean/ranzhi/)
 
-Office Support:[https://www.ranzhi.org/](https://www.ranzhi.org/)
+Official Support:[https://www.ranzhi.org/](https://www.ranzhi.org/)
 
 ### Tags
 
