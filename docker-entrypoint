@@ -2,41 +2,51 @@
 set -e
 
 MYSQL_CONFIG="/opt/zbox/etc/mysql/my.cnf"
-APACHE_CONFIG="/opt/zbox/etc/apache/httpd.conf"
 
+export PATH=/opt/zbox/:$PATH
 if [ "${1:0:1}" == "-" ]; then
   zbox --help
 elif [ "$#" == "0" ]; then
-  if [ ! -d "/opt/zbox" ]; then
+  # if the container run firstly
+  if [ ! -d "/opt/zbox" -o ! -d "/opt/zbox/app" ]; then
+    echo "Installing Ranzhi version: $RANZHI_VER ..."
     tar -zxf /tmp/zbox.tar.gz -C /opt/
-    if [[ "${BIND_ADDRESS}" == [fF][aA][lL][sS][eE] ]] && [ -f "${MYSQL_CONFIG}" ]; then
-      sed -Ei 's/^bind-address/#&/' ${MYSQL_CONFIG}
+    # auto location / to /ranzhi/
+    echo "<meta http-equiv=\"refresh\" content=\"0; url=/ranzhi/\" />" > /opt/zbox/app/htdocs/index.html
+
+    # add apache http password for adminer
+    if [ -n "${ADMINER_USER}" -a -n "${ADMINER_PASSWD}" ]; then
+      /opt/zbox/bin/htpasswd -b /opt/zbox/auth/users ${ADMINER_USER} ${ADMINER_PASSWD}
     fi
-  else
-    WORK_DIR=`ls /opt/zbox`
-    if [ -z "${WORK_DIR}" ];then
-      tar -zxf /tmp/zbox.tar.gz -C /opt/
-      if [[ "${BIND_ADDRESS}" == [fF][aA][lL][sS][eE] ]] && [ -f "${MYSQL_CONFIG}" ]; then
-        sed -Ei 's/^bind-address/#&/' ${MYSQL_CONFIG}
-      fi
+  elif [ -f "/opt/zbox/app/ranzhi/VERSION" ]; then
+    CURRENT_VER=`cat /opt/zbox/app/ranzhi/VERSION | sed 's/.stable//g'`
+    echo -e "Installed Ranzhi version: $CURRENT_VER \nNew Ranzhi version: $RANZHI_VER"
+    if [ $RANZHI_VER != $CURRENT_VER ]; then
+      # upgrade Ranzhi version
+      echo "Backuping config/my.php and upload ..."
+      cp /opt/zbox/app/ranzhi/config/my.php /opt/zbox/app/
+      mv /opt/zbox/app/ranzhi/www/data/upload /opt/zbox/app/
+      rm -rf /opt/zbox/app/ranzhi
+      rm -rf /opt/zbox/tmp/apache/httpd.pid
+      echo "Upgrading Ranzhi ..."
+      tar -zxf /tmp/zbox.tar.gz -C /tmp/
+      mv /tmp/zbox/app/ranzhi /opt/zbox/app/
+      rm -rf /tmp/*
+      # auto location / to /ranzhi/
+      echo '<meta http-equiv="refresh" content="0; url=/ranzhi/" />' > /opt/zbox/app/htdocs/index.html
+      echo "Restoring config/my.php and upload ..."
+      mv /opt/zbox/app/my.php /opt/zbox/app/ranzhi/config/my.php
+      rm -rf /opt/zbox/app/ranzhi/www/data/upload
+      mv /opt/zbox/app/upload /opt/zbox/app/ranzhi/www/data/
+      touch /opt/zbox/app/ranzhi/www/ok.txt
+      echo -e "Upgraded Ranzhi version to: $RANZHI_VER \nPlease visit your Ranzhi website to complete the upgrade task."
     fi
-  fi
-  export PATH=/opt/zbox/:$PATH
-  cat /opt/zbox/README && zbox start
-  if [ -n "${USER}" -a -n "${PASSWD}" ]; then
-    /opt/zbox/bin/htpasswd -b /opt/zbox/auth/users ${USER} ${PASSWD}
   fi
 
-  if [ -n "${SMTP_HOST}" ];then
-    echo "${SMTP_HOST}" >> /etc/hosts
-  fi
-  sleep 120
-  loop=1
-  while [ ${loop} -eq 1 ]
-  do
-    wget http://localhost/ -O /dev/null || exit 1
-    sleep 30
-  done
+  # start service
+  zbox start
+  tail -f /dev/null
+
 else
   exec "$@"
 fi
