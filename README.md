@@ -1,21 +1,24 @@
-# Docker Image for Ranzhi
+# Docker image for Ranzhi
 [![Docker Build Status](https://img.shields.io/docker/build/zhangsean/zentao.svg)](https://hub.docker.com/r/zhangsean/zentao/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zhangsean/zentao.svg)](https://hub.docker.com/r/zhangsean/zentao/)
 [![Docker Automated build](https://img.shields.io/docker/automated/zhangsean/zentao.svg)](https://hub.docker.com/r/zhangsean/zentao/)
 [![ImageLayers Size](https://img.shields.io/imagelayers/image-size/zhangsean/zentao/latest.svg)](https://hub.docker.com/r/zhangsean/zentao/)
 [![ImageLayers Layers](https://img.shields.io/imagelayers/layers/zhangsean/zentao/latest.svg)](https://hub.docker.com/r/zhangsean/zentao/)
 
-Auto build docker image for ranzhi(然之), include open source edition and pro edition.
+[![DockerHub Badge](http://dockeri.co/image/zhangsean/ranzhi)](https://hub.docker.com/r/zhangsean/ranzhi/)
 
-DockerHub:[zhangsean/ranzhi](https://hub.docker.com/r/zhangsean/ranzhi/)
+Auto build docker image for ranzhi, include open source edition and pro edition.
 
-Official Support:[https://www.ranzhi.org/](https://www.ranzhi.org/)
+DockerHub: [zhangsean/ranzhi](https://hub.docker.com/r/zhangsean/ranzhi/)
+
+Official Support: [https://www.ranzhi.org/](https://www.ranzhi.org/)
 
 ### Tags
 
 **Open soure edition**
 
-- `5.0`,`latest`
+- `5.1`,`latest`
+- `5.0`
 
 ### QuickStart
 
@@ -62,12 +65,12 @@ docker logs -f ranzhi
 ```
 You will see the upgrading process logs like following.
 ```
-Installed ranzhi version: 11.0
-New ranzhi version: 11.4
+Installed ranzhi version: 5.0
+New ranzhi version: 5.1
 Backuping config/my.php and upload ...
 Upgrading ranzhi ...
 Restoring config/my.php and upload ...
-Upgraded ranzhi version to: 11.4
+Upgraded ranzhi version to: 5.1
 Start Apache success
 Start Mysql success
 ```
