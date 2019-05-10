@@ -38,6 +38,9 @@ elif [ "$#" == "0" ]; then
       mv /opt/zbox/app/my.php /opt/zbox/app/ranzhi/config/my.php
       rm -rf /opt/zbox/app/ranzhi/www/data/upload
       mv /opt/zbox/app/upload /opt/zbox/app/ranzhi/www/data/
+      if [ -f "/opt/zbox/app/ranzhi/www/sys/upgrade.php.tmp" ]; then
+        mv /opt/zbox/app/ranzhi/www/sys/upgrade.php{.tmp,}
+      fi
       touch /opt/zbox/app/ranzhi/www/ok.txt
       echo -e "Upgraded Ranzhi version to: $RANZHI_VER \nPlease visit your Ranzhi website to complete the upgrade task."
     fi
