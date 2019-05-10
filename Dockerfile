@@ -12,7 +12,7 @@ EXPOSE 80
 
 ENTRYPOINT ["docker-entrypoint"]
 
-ENV RANZHI_VER=5.0
+ENV RANZHI_VER=5.1
 
 ARG RANZHI_URL=http://dl.cnezsoft.com/ranzhi/${RANZHI_VER}/ranzhi.${RANZHI_VER}.stable.int.zbox_64.tar.gz
 
