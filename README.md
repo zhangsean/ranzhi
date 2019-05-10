@@ -17,8 +17,8 @@ Official Support: [https://www.ranzhi.org/](https://www.ranzhi.org/)
 
 **Open soure edition**
 
-- `5.1`,`latest`
-- `5.0`
+- `v5.1`,`latest` Ranzhi v5.1
+- `v5.0` Ranzhi v5.0
 
 ### QuickStart
 
