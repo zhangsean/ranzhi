@@ -50,7 +50,6 @@ docker run -d -p 80:80 \
 * `ADMINER_PASSWD` : set the web basic password for Adminer.
 * `--add-host` : If can't send mail, try to add the smtp server domain and IP.
 
-
 ### Upgrade Ranzhi version
 
 > If you want upgrade the ranzhi version, just run a container with the `latest` docker image and mount the same zbox path `$volume/zbox/`.
@@ -79,6 +78,7 @@ Backuping config/my.php and upload ...
 Upgrading ranzhi ...
 Restoring config/my.php and upload ...
 Upgraded ranzhi version to: 5.1
+Please visit your Ranzhi website to complete the upgrade task.
 Start Apache success
 Start Mysql success
 ```
